@@ -26,7 +26,11 @@ public abstract class DatadogIntake implements Describable<DatadogIntake>, Seria
 
     public static abstract class DatadogIntakeDescriptor extends Descriptor<DatadogIntake> {
         public static List<DatadogIntakeDescriptor> all() {
-            List<DatadogIntakeDescriptor> descriptors = Jenkins.getInstanceOrNull().getDescriptorList(DatadogIntake.class);
+            Jenkins jenkins = Jenkins.getInstanceOrNull();
+            if (jenkins == null) {
+                throw new RuntimeException("Jenkins instance is null");
+            }
+            List<DatadogIntakeDescriptor> descriptors = jenkins.getDescriptorList(DatadogIntake.class);
             List<DatadogIntakeDescriptor> sortedDescriptors = new ArrayList<>(descriptors);
             sortedDescriptors.sort(Comparator.comparingInt(DatadogIntakeDescriptor::getOrder));
             return sortedDescriptors;

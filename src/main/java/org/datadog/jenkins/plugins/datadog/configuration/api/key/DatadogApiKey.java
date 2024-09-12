@@ -30,7 +30,11 @@ public abstract class DatadogApiKey implements Describable<DatadogApiKey>, Seria
 
     public static abstract class DatadogApiKeyDescriptor extends Descriptor<DatadogApiKey> {
         public static List<DatadogApiKeyDescriptor> all() {
-            List<DatadogApiKeyDescriptor> descriptors = Jenkins.getInstanceOrNull().getDescriptorList(DatadogApiKey.class);
+            Jenkins jenkins = Jenkins.getInstanceOrNull();
+            if (jenkins == null) {
+                throw new RuntimeException("Jenkins instance is null");
+            }
+            List<DatadogApiKeyDescriptor> descriptors = jenkins.getDescriptorList(DatadogApiKey.class);
             List<DatadogApiKeyDescriptor> sortedDescriptors = new ArrayList<>(descriptors);
             sortedDescriptors.sort(Comparator.comparingInt(DatadogApiKeyDescriptor::getOrder));
             return sortedDescriptors;

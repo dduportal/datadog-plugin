@@ -82,7 +82,11 @@ public class DatadogIntakeUrls extends DatadogIntake {
 
     @Override
     public Descriptor<DatadogIntake> getDescriptor() {
-        return Jenkins.getInstanceOrNull().getDescriptorOrDie(DatadogIntakeUrls.class);
+        Jenkins jenkins = Jenkins.getInstanceOrNull();
+        if (jenkins == null) {
+            throw new RuntimeException("Jenkins instance is null");
+        }
+        return jenkins.getDescriptorOrDie(DatadogIntakeUrls.class);
     }
 
     @Extension

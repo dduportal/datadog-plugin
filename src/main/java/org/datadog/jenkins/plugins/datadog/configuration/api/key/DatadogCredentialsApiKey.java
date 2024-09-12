@@ -64,7 +64,11 @@ public class DatadogCredentialsApiKey extends DatadogApiKey {
 
     @Override
     public Descriptor<DatadogApiKey> getDescriptor() {
-        return Jenkins.getInstanceOrNull().getDescriptorOrDie(DatadogCredentialsApiKey.class);
+        Jenkins jenkins = Jenkins.getInstanceOrNull();
+        if (jenkins == null) {
+            throw new RuntimeException("Jenkins instance is null");
+        }
+        return jenkins.getDescriptorOrDie(DatadogCredentialsApiKey.class);
     }
 
     @Extension

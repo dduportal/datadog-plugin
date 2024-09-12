@@ -113,7 +113,11 @@ public class DatadogApiConfiguration extends DatadogClientConfiguration {
 
     @Override
     public Descriptor<DatadogClientConfiguration> getDescriptor() {
-        return Jenkins.getInstanceOrNull().getDescriptorOrDie(DatadogApiConfiguration.class);
+        Jenkins jenkins = Jenkins.getInstanceOrNull();
+        if (jenkins == null) {
+            throw new RuntimeException("Jenkins instance is null");
+        }
+        return jenkins.getDescriptorOrDie(DatadogApiConfiguration.class);
     }
 
     @Extension

@@ -22,7 +22,11 @@ public abstract class DatadogClientConfiguration implements Describable<DatadogC
 
     public static abstract class DatadogClientConfigurationDescriptor extends Descriptor<DatadogClientConfiguration> {
         public static List<DatadogClientConfigurationDescriptor> all() {
-            List<DatadogClientConfigurationDescriptor> descriptors = Jenkins.getInstanceOrNull().getDescriptorList(DatadogClientConfiguration.class);
+            Jenkins jenkins = Jenkins.getInstanceOrNull();
+            if (jenkins == null) {
+                throw new RuntimeException("Jenkins instance is null");
+            }
+            List<DatadogClientConfigurationDescriptor> descriptors = jenkins.getDescriptorList(DatadogClientConfiguration.class);
             List<DatadogClientConfigurationDescriptor> sortedDescriptors = new ArrayList<>(descriptors);
             sortedDescriptors.sort(Comparator.comparingInt(DatadogClientConfigurationDescriptor::getOrder));
             return sortedDescriptors;
