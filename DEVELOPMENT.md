@@ -52,6 +52,11 @@ The applied configuration is stored in `docker/controller-node/jenkins-casc.yaml
  
 Jenkins controller container exposes port 5055 for remote debugging via JDWP. 
 
+#### Known errors
+
+If docker-compose fails with a message that looks like `error mounting ".../datadog-plugin/target/datadog.hpi" to rootfs at "/var/jenkins_home/plugins/datadog.hpi"`, 
+make sure that you have properly set the `JENKINS_PLUGIN` env var and that you have built the plugin by running `mvn clean package -DskipTests`. 
+
 #### Manual Testing without an Agent
 
 Alternatively, you can manually test the plugin by running the command `mvn hpi:run`, which will spin up a local development environment without the agent. This allows you to test using the HTTP client without needing docker. See the [jenkins documentation](https://jenkinsci.github.io/maven-hpi-plugin/run-mojo.html) for more details and options.
