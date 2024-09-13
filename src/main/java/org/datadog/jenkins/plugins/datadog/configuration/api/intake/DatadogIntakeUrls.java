@@ -90,7 +90,7 @@ public class DatadogIntakeUrls extends DatadogIntake {
     }
 
     @Extension
-    public static final class DatadogIntakeUrlsDescriptor extends DatadogIntakeDescriptor {
+    public static final class DatadogIntakeUrlsDescriptor extends DatadogIntake.DatadogIntakeDescriptor {
         public DatadogIntakeUrlsDescriptor() {
             load();
         }
