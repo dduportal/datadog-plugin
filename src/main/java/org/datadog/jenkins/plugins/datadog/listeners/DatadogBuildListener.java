@@ -58,6 +58,7 @@ import org.datadog.jenkins.plugins.datadog.events.BuildStartedEventImpl;
 import org.datadog.jenkins.plugins.datadog.metrics.Metrics;
 import org.datadog.jenkins.plugins.datadog.metrics.MetricsClient;
 import org.datadog.jenkins.plugins.datadog.model.BuildData;
+import org.datadog.jenkins.plugins.datadog.model.DatadogLinkAction;
 import org.datadog.jenkins.plugins.datadog.model.GitCommitAction;
 import org.datadog.jenkins.plugins.datadog.model.GitRepositoryAction;
 import org.datadog.jenkins.plugins.datadog.model.PipelineQueueInfoAction;
@@ -416,6 +417,8 @@ public class DatadogBuildListener extends RunListener<Run> {
                 DatadogUtilities.severe(logger, e, "Failed to parse finalized build data");
                 return;
             }
+
+            run.addAction(new DatadogLinkAction(buildData));
 
             // APM Traces
             traceWriter.submitBuild(buildData, run);
