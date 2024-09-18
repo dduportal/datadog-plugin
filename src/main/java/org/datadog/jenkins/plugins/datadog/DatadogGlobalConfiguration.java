@@ -25,21 +25,18 @@ THE SOFTWARE.
 
 package org.datadog.jenkins.plugins.datadog;
 
-import static org.datadog.jenkins.plugins.datadog.configuration.DatadogAgentConfiguration.DatadogAgentConfigurationDescriptor.getDefaultAgentHost;
-import static org.datadog.jenkins.plugins.datadog.configuration.DatadogAgentConfiguration.DatadogAgentConfigurationDescriptor.getDefaultAgentLogCollectionPort;
-import static org.datadog.jenkins.plugins.datadog.configuration.DatadogAgentConfiguration.DatadogAgentConfigurationDescriptor.getDefaultAgentPort;
-import static org.datadog.jenkins.plugins.datadog.configuration.DatadogAgentConfiguration.DatadogAgentConfigurationDescriptor.getDefaultAgentTraceCollectionPort;
-import static org.datadog.jenkins.plugins.datadog.configuration.api.key.DatadogTextApiKey.DatadogTextApiKeyDescriptor.getDefaultKey;
-
+import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.annotations.XStreamConverter;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import hudson.Extension;
+import hudson.XmlFile;
 import hudson.init.InitMilestone;
 import hudson.init.Initializer;
 import hudson.model.AbstractProject;
 import hudson.util.FormValidation;
 import hudson.util.FormValidation.Kind;
 import hudson.util.Secret;
+<<<<<<< Updated upstream
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -48,7 +45,11 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+=======
+import hudson.util.XStream2;
+>>>>>>> Stashed changes
 import jenkins.model.GlobalConfiguration;
+import jenkins.model.Jenkins;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.datadog.jenkins.plugins.datadog.clients.ClientHolder;
@@ -67,11 +68,31 @@ import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.interceptor.RequirePOST;
 
+import javax.annotation.Nonnull;
+import java.io.File;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
+import java.util.stream.Collectors;
+
+import static org.datadog.jenkins.plugins.datadog.configuration.DatadogAgentConfiguration.DatadogAgentConfigurationDescriptor.*;
+import static org.datadog.jenkins.plugins.datadog.configuration.api.key.DatadogTextApiKey.DatadogTextApiKeyDescriptor.getDefaultKey;
+
 @Extension
 public class DatadogGlobalConfiguration extends GlobalConfiguration {
 
     private static final Logger logger = Logger.getLogger(DatadogGlobalConfiguration.class.getName());
     private static final String DISPLAY_NAME = "Datadog Plugin";
+
+    private static final XStream XSTREAM;
+
+    static {
+        XSTREAM = new XStream2(XStream2.getDefaultDriver());
+        XSTREAM.autodetectAnnotations(true);
+    }
 
     // Event String constants
     public static final String SYSTEM_EVENTS = "ItemLocationChanged,"
@@ -145,6 +166,11 @@ public class DatadogGlobalConfiguration extends GlobalConfiguration {
     public DatadogGlobalConfiguration() {
         load(); // Load the persisted global configuration
         loadEnvVariables(); // Load environment variables
+    }
+
+    @Override
+    protected XmlFile getConfigFile() {
+        return new XmlFile(XSTREAM, new File(Jenkins.get().getRootDir(), getId() + ".xml"));
     }
 
     @Initializer(after = InitMilestone.SYSTEM_CONFIG_LOADED)

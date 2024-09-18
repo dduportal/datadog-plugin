@@ -18,13 +18,6 @@ import org.junit.Test;
 
 public class DatadogGlobalConfigurationTest {
 
-    private static final XStream XSTREAM = new XStream2(XStream2.getDefaultDriver());
-
-    private static DatadogGlobalConfiguration parseConfigurationFromResource(String resourceName) {
-        URL resource = DatadogGlobalConfigurationTest.class.getResource(resourceName);
-        return (DatadogGlobalConfiguration) XSTREAM.fromXML(resource);
-    }
-
     @Test
     public void canLoadGlobalConfiguration() {
         DatadogGlobalConfiguration configuration = parseConfigurationFromResource("globalConfiguration.xml");
@@ -253,5 +246,16 @@ public class DatadogGlobalConfigurationTest {
         assertFalse(configuration.isRefreshDogstatsdClient());
         assertTrue(configuration.isCacheBuildRuns());
         assertFalse(configuration.isUseAwsInstanceHostname());
+    }
+
+    private static final XStream XSTREAM = new XStream2(XStream2.getDefaultDriver());
+
+    static {
+        XSTREAM.processAnnotations(new Class[] { DatadogGlobalConfiguration.class, DatadogApiConfiguration.class });
+    }
+
+    private static DatadogGlobalConfiguration parseConfigurationFromResource(String resourceName) {
+        URL resource = DatadogGlobalConfigurationTest.class.getResource(resourceName);
+        return (DatadogGlobalConfiguration) XSTREAM.fromXML(resource);
     }
 }

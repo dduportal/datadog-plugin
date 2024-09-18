@@ -2,6 +2,7 @@ package org.datadog.jenkins.plugins.datadog;
 
 import com.thoughtworks.xstream.XStream;
 import hudson.util.XStream2;
+import org.datadog.jenkins.plugins.datadog.configuration.DatadogApiConfiguration;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
@@ -77,6 +78,10 @@ public class DatadogGlobalConfigurationSaveTest {
     }
 
     private static final XStream XSTREAM = new XStream2(XStream2.getDefaultDriver());
+
+    static {
+        XSTREAM.processAnnotations(new Class[] { DatadogGlobalConfiguration.class, DatadogApiConfiguration.class });
+    }
 
     private static DatadogGlobalConfiguration parseConfigurationFromResource(String resourceName) {
         URL resource = DatadogGlobalConfigurationSaveTest.class.getResource(resourceName);
