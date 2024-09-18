@@ -185,6 +185,7 @@ public class DatadogAgentConfiguration extends DatadogClientConfiguration {
         }
 
         @RequirePOST
+        @SuppressWarnings("lgtm[jenkins/no-permission-check]") // no side effects, no private information returned
         public FormValidation doCheckLogConnectivity(@QueryParameter("agentHost") final String agentHost,
                                                      @QueryParameter("agentLogCollectionPort") Integer agentLogCollectionPort) {
             if (StringUtils.isBlank(agentHost)) {
@@ -201,6 +202,7 @@ public class DatadogAgentConfiguration extends DatadogClientConfiguration {
         }
 
         @RequirePOST
+        @SuppressWarnings("lgtm[jenkins/no-permission-check]") // no side effects, no private information returned
         public FormValidation doCheckTraceConnectivity(@QueryParameter("agentHost") final String agentHost,
                                                        @QueryParameter("agentTraceCollectionPort") Integer agentTraceCollectionPort) {
             if (StringUtils.isBlank(agentHost)) {

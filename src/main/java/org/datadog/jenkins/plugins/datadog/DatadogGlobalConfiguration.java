@@ -83,7 +83,7 @@ public class DatadogGlobalConfiguration extends GlobalConfiguration {
     // Env Var key to get the hostname from the Jenkins workers.
     public static final String DD_CI_HOSTNAME = "DD_CI_HOSTNAME";
 
-    private static final String REPORT_WITH_PROPERTY = "DATADOG_JENKINS_PLUGIN_REPORT_WITH";
+    static final String REPORT_WITH_PROPERTY = "DATADOG_JENKINS_PLUGIN_REPORT_WITH";
     private static final String TARGET_TRACE_SERVICE_NAME_PROPERTY = "DATADOG_JENKINS_PLUGIN_TRACE_SERVICE_NAME";
     private static final String HOSTNAME_PROPERTY = "DATADOG_JENKINS_PLUGIN_HOSTNAME";
     private static final String EXCLUDED_PROPERTY = "DATADOG_JENKINS_PLUGIN_EXCLUDED";
@@ -839,6 +839,7 @@ public class DatadogGlobalConfiguration extends GlobalConfiguration {
     private Secret targetApiKey;
     /** @deprecated use {@link #datadogClientConfiguration} */
     @Deprecated
+    @SuppressWarnings("lgtm[jenkins/plaintext-storage]") // not the actual key, but the ID of Jenkins credentials
     private String targetCredentialsApiKey;
     /** @deprecated use {@link #datadogClientConfiguration} */
     @Deprecated

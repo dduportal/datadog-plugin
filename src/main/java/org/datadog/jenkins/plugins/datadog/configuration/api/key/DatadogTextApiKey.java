@@ -21,7 +21,7 @@ import java.util.Objects;
 @Symbol("datadogTextApiKey")
 public class DatadogTextApiKey extends DatadogApiKey {
 
-    static final String TARGET_API_KEY_PROPERTY = "DATADOG_JENKINS_PLUGIN_TARGET_API_KEY";
+    public static final String TARGET_API_KEY_PROPERTY = "DATADOG_JENKINS_PLUGIN_TARGET_API_KEY";
 
     private final Secret key;
 

@@ -2,17 +2,19 @@ package org.datadog.jenkins.plugins.datadog.configuration.api.intake;
 
 import hudson.Extension;
 import hudson.model.Descriptor;
-import java.util.Arrays;
-import java.util.Objects;
-import javax.annotation.Nonnull;
 import jenkins.model.Jenkins;
 import org.jenkinsci.Symbol;
 import org.kohsuke.stapler.DataBoundConstructor;
 
+import javax.annotation.Nonnull;
+import java.util.Arrays;
+import java.util.Objects;
+
 @Symbol("datadogIntakeSite")
 public class DatadogIntakeSite extends DatadogIntake {
 
-    static final String DATADOG_SITE_PROPERTY = "DATADOG_JENKINS_PLUGIN_DATADOG_SITE";
+    public static final String DATADOG_SITE_PROPERTY = "DATADOG_JENKINS_PLUGIN_DATADOG_SITE";
+
     static final DatadogSite DEFAULT_DATADOG_SITE_VALUE = DatadogSite.US1;
 
     private final DatadogSite site;

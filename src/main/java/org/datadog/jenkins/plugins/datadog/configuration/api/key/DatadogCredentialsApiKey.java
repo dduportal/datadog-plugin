@@ -96,6 +96,7 @@ public class DatadogCredentialsApiKey extends DatadogApiKey {
          * @param credentialsId - ID of the credential containing the API key
          * @return a ListBoxModel object used to display all the available credentials.
          */
+        @RequirePOST
         public ListBoxModel doFillCredentialsIdItems(
                 @AncestorInPath Item item,
                 @QueryParameter("credentialsId") String credentialsId

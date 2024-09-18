@@ -20,9 +20,9 @@ import org.kohsuke.stapler.interceptor.RequirePOST;
 @Symbol("datadogIntakeUrls")
 public class DatadogIntakeUrls extends DatadogIntake {
 
-    static final String TARGET_API_URL_PROPERTY = "DATADOG_JENKINS_PLUGIN_TARGET_API_URL";
-    static final String TARGET_LOG_INTAKE_URL_PROPERTY = "DATADOG_JENKINS_PLUGIN_TARGET_LOG_INTAKE_URL";
-    static final String TARGET_WEBHOOK_INTAKE_URL_PROPERTY = "DATADOG_JENKINS_TARGET_WEBHOOK_INTAKE_URL";
+    public static final String TARGET_API_URL_PROPERTY = "DATADOG_JENKINS_PLUGIN_TARGET_API_URL";
+    public static final String TARGET_LOG_INTAKE_URL_PROPERTY = "DATADOG_JENKINS_PLUGIN_TARGET_LOG_INTAKE_URL";
+    public static final String TARGET_WEBHOOK_INTAKE_URL_PROPERTY = "DATADOG_JENKINS_TARGET_WEBHOOK_INTAKE_URL";
 
     static final String DEFAULT_API_URL_VALUE = "https://api.datadoghq.com/api/";
     static final String DEFAULT_LOG_INTAKE_URL_VALUE = "https://http-intake.logs.datadoghq.com/v1/input/";
@@ -103,6 +103,7 @@ public class DatadogIntakeUrls extends DatadogIntake {
         }
 
         @RequirePOST
+        @SuppressWarnings("lgtm[jenkins/no-permission-check]") // no side effects, no private information returned
         public FormValidation doCheckApiUrl(@QueryParameter("apiUrl") final String apiUrl) {
             if (StringUtils.isBlank(apiUrl)) {
                 return FormValidation.error("Please enter the API URL");
@@ -111,6 +112,7 @@ public class DatadogIntakeUrls extends DatadogIntake {
         }
 
         @RequirePOST
+        @SuppressWarnings("lgtm[jenkins/no-permission-check]") // no side effects, no private information returned
         public FormValidation doCheckLogsUrl(@QueryParameter("logsUrl") final String logsUrl,
                                              @RelativePath("../..") // parent's parent (this -> API client configuration -> global configuration
                                              @QueryParameter("collectBuildLogs") final boolean collectBuildLogs) {
@@ -121,6 +123,7 @@ public class DatadogIntakeUrls extends DatadogIntake {
         }
 
         @RequirePOST
+        @SuppressWarnings("lgtm[jenkins/no-permission-check]") // no side effects, no private information returned
         public FormValidation doCheckWebhooksUrl(@QueryParameter("webhooksUrl") final String webhooksUrl,
                                                       @RelativePath("../..") // parent's parent (this -> API client configuration -> global configuration
                                                       @QueryParameter("ciVisibilityData") final boolean enableCiVisibility) {
