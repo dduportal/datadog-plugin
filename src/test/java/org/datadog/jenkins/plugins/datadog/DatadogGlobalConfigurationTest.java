@@ -20,14 +20,14 @@ public class DatadogGlobalConfigurationTest {
 
     private static final XStream XSTREAM = new XStream2(XStream2.getDefaultDriver());
 
-    private static DatadogGlobalConfiguration parseConfiguration(String resourceName) {
+    private static DatadogGlobalConfiguration parseConfigurationFromResource(String resourceName) {
         URL resource = DatadogGlobalConfigurationTest.class.getResource(resourceName);
         return (DatadogGlobalConfiguration) XSTREAM.fromXML(resource);
     }
 
     @Test
     public void canLoadGlobalConfiguration() {
-        DatadogGlobalConfiguration configuration = parseConfiguration("globalConfiguration.xml");
+        DatadogGlobalConfiguration configuration = parseConfigurationFromResource("globalConfiguration.xml");
         assertTrue(configuration.getDatadogClientConfiguration() instanceof DatadogApiConfiguration);
         DatadogApiConfiguration datadogClientConfiguration = (DatadogApiConfiguration) configuration.getDatadogClientConfiguration();
 
@@ -61,7 +61,7 @@ public class DatadogGlobalConfigurationTest {
 
     @Test
     public void canLoadGlobalConfigurationWithCredentialsApiKey() {
-        DatadogGlobalConfiguration configuration = parseConfiguration("globalConfigurationCredentialsKey.xml");
+        DatadogGlobalConfiguration configuration = parseConfigurationFromResource("globalConfigurationCredentialsKey.xml");
         assertTrue(configuration.getDatadogClientConfiguration() instanceof DatadogApiConfiguration);
         DatadogApiConfiguration datadogClientConfiguration = (DatadogApiConfiguration) configuration.getDatadogClientConfiguration();
 
@@ -95,7 +95,7 @@ public class DatadogGlobalConfigurationTest {
 
     @Test
     public void canLoadGlobalConfigurationWithSite() {
-        DatadogGlobalConfiguration configuration = parseConfiguration("globalConfigurationSite.xml");
+        DatadogGlobalConfiguration configuration = parseConfigurationFromResource("globalConfigurationSite.xml");
         assertTrue(configuration.getDatadogClientConfiguration() instanceof DatadogApiConfiguration);
         DatadogApiConfiguration datadogClientConfiguration = (DatadogApiConfiguration) configuration.getDatadogClientConfiguration();
 
@@ -129,7 +129,7 @@ public class DatadogGlobalConfigurationTest {
 
     @Test
     public void canLoadGlobalConfigurationReportingToAgent() {
-        DatadogGlobalConfiguration configuration = parseConfiguration("globalConfigurationAgent.xml");
+        DatadogGlobalConfiguration configuration = parseConfigurationFromResource("globalConfigurationAgent.xml");
 
         assertTrue(configuration.getDatadogClientConfiguration() instanceof DatadogAgentConfiguration);
         DatadogAgentConfiguration datadogAgentConfiguration = (DatadogAgentConfiguration) configuration.getDatadogClientConfiguration();
@@ -159,7 +159,7 @@ public class DatadogGlobalConfigurationTest {
 
     @Test
     public void canLoadGlobalConfigurationFromLegacyFormat() {
-        DatadogGlobalConfiguration configuration = parseConfiguration("globalConfigurationLegacyFormat.xml");
+        DatadogGlobalConfiguration configuration = parseConfigurationFromResource("globalConfigurationLegacyFormat.xml");
         assertTrue(configuration.getDatadogClientConfiguration() instanceof DatadogApiConfiguration);
         DatadogApiConfiguration datadogClientConfiguration = (DatadogApiConfiguration) configuration.getDatadogClientConfiguration();
 
@@ -193,7 +193,7 @@ public class DatadogGlobalConfigurationTest {
 
     @Test
     public void canLoadGlobalConfigurationFromLegacyFormatWithCredentialsApiKey() {
-        DatadogGlobalConfiguration configuration = parseConfiguration("globalConfigurationLegacyFormatCredentialsKey.xml");
+        DatadogGlobalConfiguration configuration = parseConfigurationFromResource("globalConfigurationLegacyFormatCredentialsKey.xml");
         assertTrue(configuration.getDatadogClientConfiguration() instanceof DatadogApiConfiguration);
         DatadogApiConfiguration datadogClientConfiguration = (DatadogApiConfiguration) configuration.getDatadogClientConfiguration();
 
@@ -227,7 +227,7 @@ public class DatadogGlobalConfigurationTest {
 
     @Test
     public void canLoadGlobalConfigurationFromLegacyFormatReportingToAgent() {
-        DatadogGlobalConfiguration configuration = parseConfiguration("globalConfigurationLegacyFormatAgent.xml");
+        DatadogGlobalConfiguration configuration = parseConfigurationFromResource("globalConfigurationLegacyFormatAgent.xml");
 
         assertTrue(configuration.getDatadogClientConfiguration() instanceof DatadogAgentConfiguration);
         DatadogAgentConfiguration datadogAgentConfiguration = (DatadogAgentConfiguration) configuration.getDatadogClientConfiguration();

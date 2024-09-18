@@ -10,6 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 import javax.annotation.Nonnull;
 import jenkins.model.Jenkins;
@@ -152,5 +153,23 @@ public class DatadogApiConfiguration extends DatadogClientConfiguration {
         public int getOrder() {
             return 1;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        DatadogApiConfiguration that = (DatadogApiConfiguration) o;
+        return Objects.equals(intake, that.intake)
+                && Objects.equals(apiKey, that.apiKey);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(intake, apiKey);
     }
 }

@@ -12,6 +12,7 @@ import hudson.util.FormValidation;
 import hudson.util.ListBoxModel;
 import hudson.util.Secret;
 import java.util.Collections;
+import java.util.Objects;
 import javax.annotation.Nonnull;
 import jenkins.model.Jenkins;
 import org.apache.commons.lang.StringUtils;
@@ -170,5 +171,22 @@ public class DatadogCredentialsApiKey extends DatadogApiKey {
         public int getOrder() {
             return 1;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        DatadogCredentialsApiKey that = (DatadogCredentialsApiKey) o;
+        return Objects.equals(credentialsId, that.credentialsId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(credentialsId);
     }
 }

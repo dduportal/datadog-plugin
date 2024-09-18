@@ -3,6 +3,7 @@ package org.datadog.jenkins.plugins.datadog.configuration.api.intake;
 import hudson.Extension;
 import hudson.model.Descriptor;
 import java.util.Arrays;
+import java.util.Objects;
 import javax.annotation.Nonnull;
 import jenkins.model.Jenkins;
 import org.jenkinsci.Symbol;
@@ -90,5 +91,22 @@ public class DatadogIntakeSite extends DatadogIntake {
         public int getOrder() {
             return 0;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        DatadogIntakeSite that = (DatadogIntakeSite) o;
+        return site == that.site;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(site);
     }
 }

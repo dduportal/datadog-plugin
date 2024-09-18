@@ -8,6 +8,7 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.Objects;
 import javax.annotation.Nonnull;
 import jenkins.model.Jenkins;
 import org.apache.commons.lang.StringUtils;
@@ -159,5 +160,24 @@ public class DatadogIntakeUrls extends DatadogIntake {
         public int getOrder() {
             return 1;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        DatadogIntakeUrls that = (DatadogIntakeUrls) o;
+        return Objects.equals(apiUrl, that.apiUrl)
+                && Objects.equals(logsUrl, that.logsUrl)
+                && Objects.equals(webhooksUrl, that.webhooksUrl);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(apiUrl, logsUrl, webhooksUrl);
     }
 }

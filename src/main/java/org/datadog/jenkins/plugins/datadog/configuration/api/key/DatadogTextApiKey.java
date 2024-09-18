@@ -16,6 +16,8 @@ import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.interceptor.RequirePOST;
 
+import java.util.Objects;
+
 @Symbol("datadogTextApiKey")
 public class DatadogTextApiKey extends DatadogApiKey {
 
@@ -86,5 +88,22 @@ public class DatadogTextApiKey extends DatadogApiKey {
         public int getOrder() {
             return 0;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        DatadogTextApiKey that = (DatadogTextApiKey) o;
+        return Objects.equals(key, that.key);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(key);
     }
 }

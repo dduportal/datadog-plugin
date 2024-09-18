@@ -9,6 +9,7 @@ import java.net.Socket;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Logger;
 import javax.annotation.Nonnull;
 import jenkins.model.Jenkins;
@@ -314,5 +315,25 @@ public class DatadogAgentConfiguration extends DatadogClientConfiguration {
         public int getOrder() {
             return 0;
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        DatadogAgentConfiguration that = (DatadogAgentConfiguration) o;
+        return Objects.equals(agentHost, that.agentHost)
+                && Objects.equals(agentPort, that.agentPort)
+                && Objects.equals(agentLogCollectionPort, that.agentLogCollectionPort)
+                && Objects.equals(agentTraceCollectionPort, that.agentTraceCollectionPort);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(agentHost, agentPort, agentLogCollectionPort, agentTraceCollectionPort);
     }
 }
