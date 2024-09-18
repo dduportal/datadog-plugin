@@ -36,18 +36,7 @@ import hudson.model.AbstractProject;
 import hudson.util.FormValidation;
 import hudson.util.FormValidation.Kind;
 import hudson.util.Secret;
-<<<<<<< Updated upstream
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
-=======
 import hudson.util.XStream2;
->>>>>>> Stashed changes
 import jenkins.model.GlobalConfiguration;
 import jenkins.model.Jenkins;
 import net.sf.json.JSONObject;
@@ -68,14 +57,10 @@ import org.kohsuke.stapler.QueryParameter;
 import org.kohsuke.stapler.StaplerRequest;
 import org.kohsuke.stapler.interceptor.RequirePOST;
 
-import javax.annotation.Nonnull;
 import java.io.File;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
 import java.util.stream.Collectors;
 
 import static org.datadog.jenkins.plugins.datadog.configuration.DatadogAgentConfiguration.DatadogAgentConfigurationDescriptor.*;
