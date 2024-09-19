@@ -1134,13 +1134,13 @@ public class DatadogGlobalConfiguration extends GlobalConfiguration {
         if (this.collectBuildTraces) {
             this.enableCiVisibility = true;
         }
-        if (this.traceServiceName != null) {
+        if (StringUtils.isNotBlank(this.traceServiceName)) {
             this.ciInstanceName = this.traceServiceName;
         }
-        if (this.blacklist != null) {
+        if (StringUtils.isNotBlank(this.blacklist)) {
             this.excluded = this.blacklist;
         }
-        if (this.whitelist != null) {
+        if (StringUtils.isNotBlank(this.whitelist)) {
             this.included = this.whitelist;
         }
         if (DATADOG_AGENT_CLIENT_TYPE.equals(reportWith)) {
@@ -1149,7 +1149,7 @@ public class DatadogGlobalConfiguration extends GlobalConfiguration {
         if (DATADOG_API_CLIENT_TYPE.equals(reportWith)) {
             DatadogIntakeUrls intake = new DatadogIntakeUrls(this.targetApiURL, this.targetLogIntakeURL, this.targetWebhookIntakeURL);
             DatadogApiKey apiKey;
-            if (this.targetCredentialsApiKey != null) {
+            if (StringUtils.isNotBlank(this.targetCredentialsApiKey)) {
                 apiKey = new DatadogCredentialsApiKey(this.targetCredentialsApiKey);
             } else if (this.targetApiKey != null) {
                 apiKey = new DatadogTextApiKey(this.targetApiKey);

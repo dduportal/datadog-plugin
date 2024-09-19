@@ -248,6 +248,40 @@ public class DatadogGlobalConfigurationTest {
         assertFalse(configuration.isUseAwsInstanceHostname());
     }
 
+    @Test
+    public void canLoadGlobalConfigurationFromLegacyFormatWithEmptyCredentialsKey() {
+        DatadogGlobalConfiguration configuration = parseConfigurationFromResource("globalConfigurationLegacyFormatCredentialsKeyEmpty.xml");
+        assertTrue(configuration.getDatadogClientConfiguration() instanceof DatadogApiConfiguration);
+        DatadogApiConfiguration datadogClientConfiguration = (DatadogApiConfiguration) configuration.getDatadogClientConfiguration();
+
+        DatadogIntake intake = datadogClientConfiguration.getIntake();
+        assertEquals("my-target-api-url", intake.getApiUrl());
+        assertEquals("my-target-log-intake-url", intake.getLogsUrl());
+        assertEquals("my-target-webhook-intake-url", intake.getWebhooksUrl());
+
+        assertTrue(datadogClientConfiguration.getApiKey() instanceof DatadogTextApiKey);
+        DatadogTextApiKey textApiKey = (DatadogTextApiKey) datadogClientConfiguration.getApiKey();
+        assertEquals("{AQAAABAAAAAwB78atDHwzelG9W0Fw5FRNq0ZUaLh1BwpQPKhvs2u84lxkRPDqeUNoVZel+MKwfyTOjuetnituHYGMdvE9bc3kg==}", Secret.toString(textApiKey.getKey()));
+
+        assertEquals("my-jenkins-service-name", configuration.getCiInstanceName());
+        assertEquals("my-hostname", configuration.getHostname());
+        assertEquals("my-blacklist", configuration.getExcluded());
+        assertEquals("my-whitelist", configuration.getIncluded());
+        assertEquals("my-global-tag-file", configuration.getGlobalTagFile());
+        assertEquals("my-global-tags", configuration.getGlobalTags());
+        assertEquals("my-global-job-tags", configuration.getGlobalJobTags());
+        assertEquals("my-include-events", configuration.getIncludeEvents());
+        assertEquals("my-exclude-evens", configuration.getExcludeEvents());
+        assertFalse(configuration.isEmitSecurityEvents());
+        assertFalse(configuration.isEmitSystemEvents());
+        assertTrue(configuration.isCollectBuildLogs());
+        assertTrue(configuration.getEnableCiVisibility());
+        assertFalse(configuration.isRetryLogs());
+        assertTrue(configuration.isRefreshDogstatsdClient());
+        assertFalse(configuration.isCacheBuildRuns());
+        assertTrue(configuration.isUseAwsInstanceHostname());
+    }
+
     private static final XStream XSTREAM = new XStream2(XStream2.getDefaultDriver());
 
     static {
