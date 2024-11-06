@@ -81,13 +81,13 @@ public class DatadogAgentConfiguration extends DatadogClientConfiguration {
     public void validateTracesConnection() throws Descriptor.FormException {
         FormValidation connectivityCheckResult = checkTracesConnectivity(agentHost, agentTraceCollectionPort);
         if (connectivityCheckResult.kind == FormValidation.Kind.ERROR) {
-            throw new Descriptor.FormException("CI Visibility connectivity check failed: " + connectivityCheckResult.getMessage(), "ciVisibilityData");
+            throw new Descriptor.FormException(connectivityCheckResult.getMessage(), "ciVisibilityData");
         }
     }
 
     private static FormValidation checkTracesConnectivity(String agentHost, Integer agentTraceCollectionPort) {
         if (StringUtils.isBlank(agentHost)) {
-            return FormValidation.error("Host name missing");
+            return FormValidation.error("Agent host name missing");
         }
         if (agentTraceCollectionPort == null) {
             return FormValidation.error("Trace collection port missing");
@@ -100,7 +100,7 @@ public class DatadogAgentConfiguration extends DatadogClientConfiguration {
                 return FormValidation.error("The agent returned empty endpoints list");
             }
         } catch (Exception e) {
-            return FormValidation.error(e.getMessage());
+            return FormValidation.error("Traces HTTP connectivity check failed: " + e.getMessage());
         }
     }
 
